@@ -1,28 +1,29 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Feb 28 09:47:45 2018
-
-@author: Tom
-"""
-
 import board
 import neopixel
+import random
+import time
 
-pixels = neopixel.NeoPixel(board.D6, 300, brightness=0.1, auto_write=False)
+pixels = neopixel.NeoPixel(board.D6, 100, brightness=.3, auto_write=False)
 testcol = (255, 255, 255)
 ttype=type(testcol)
 print(ttype)
-pixels[4] = (testcol)
+#pixels[4] = (testcol)
 pixels.show()
 
-data = range(0,300)
-chunks = [data[x:x+3] for x in range(0, len(data), 3)]
+#colors = {0:(0, 255, 75), 1:(0, 255, 0), 2:(255, 255, 255)} #St. Patrick's/March
+colors = {0:(255, 0, 0), 1:(255, 0, 75), 2:(255, 255, 255)} #St. Patrick's/March - Weird Alitove String
+#colors = {0:(255, 0, 75), 1:(255, 0, 0), 2:(255, 255, 255)} #St. Valentine's/February
+#colors = {0:(255, 0, 0), 1:(255, 255, 255), 2:(0, 0, 255)} #Fourth of July
+#colors = {0:(0, 255, 0), 1:(0, 255, 0), 2:(0, 0, 255), 3:(0, 0, 255)} #Seahawks
+#colors = {0:(255, 0, 0), 1:(255, 165, 0), 2:(255, 255, 0), 3:(0, 255, 0), 4:(0, 0, 255), 5:(0, 35, 200), 6:(255, 0, 255)}
+ccount = len(colors)
+#print (ccount)
+# print(colors[2])
+
+data = range(0,100)
+chunks = [data[x:x+ccount] for x in range(0, len(data), ccount)]
 # print ("hello")
 # print ("this is a chunk:", chunks[3])
-
-colors = {0:(255, 0, 50), 1:(255, 0, 200), 2:(255, 255, 255)}
-
-# print(colors[2])
 
 for p in chunks:
         
@@ -39,3 +40,19 @@ for p in chunks:
             
             
         n = n+1
+
+while True:
+    t = random.randrange(1, 100, 2)
+    oc = pixels[t]
+    pixels[t] = (174, 255, 0) #Alitove String modification for GRB
+    #pixels[t] = (255, 174, 0) #Standard LED RGB 
+    print("LED:", t, "has been twinkled")
+    pixels.show()
+    time.sleep(.15)
+    pixels[t] = (255, 255, 255)
+    pixels.show()
+    time.sleep(.01)
+    pixels[t] = oc
+    pixels.show()
+    
+    
